@@ -1,0 +1,10 @@
+*
+!Dockerfile
+!user.sh
+!check_container.sh
+!entrypoint.sh
+!start_cameras.sh
+!spinnaker/
+!spinnaker/libgentl_4.4.0.246_amd64.deb
+!spinnaker/libspinnaker_4.4.0.246_amd64.deb
+!spinnaker/libspinnaker-dev_4.4.0.246_amd64.deb

@@ -1,0 +1,115 @@
+# Grasshopper3 GS3-U3-32S4C GenICam mapping. Order is significant:
+# disable triggers, set image geometry, then arm triggers after configuring IO.
+parameters:
+  - name: trigger_selector
+    type: enum
+    node: AcquisitionControl/TriggerSelector
+  - name: trigger_mode_off
+    type: enum
+    node: AcquisitionControl/TriggerMode
+  - name: video_mode
+    type: enum
+    node: ImageFormatControl/VideoMode
+  - name: binning_vertical
+    type: int
+    node: ImageFormatControl/BinningVertical
+  - name: pixel_format
+    type: enum
+    node: ImageFormatControl/PixelFormat
+  - name: offset_x_reset
+    type: int
+    node: ImageFormatControl/OffsetX
+  - name: offset_y_reset
+    type: int
+    node: ImageFormatControl/OffsetY
+  - name: image_width
+    type: int
+    node: ImageFormatControl/Width
+  - name: image_height
+    type: int
+    node: ImageFormatControl/Height
+  - name: offset_x
+    type: int
+    node: ImageFormatControl/OffsetX
+  - name: offset_y
+    type: int
+    node: ImageFormatControl/OffsetY
+  - name: gain_auto
+    type: enum
+    node: AnalogControl/GainAuto
+  - name: gain
+    type: float
+    node: AnalogControl/Gain
+  - name: black_level
+    type: float
+    node: AnalogControl/BlackLevel
+  - name: exposure_auto
+    type: enum
+    node: AcquisitionControl/ExposureAuto
+  - name: exposure_mode
+    type: enum
+    node: AcquisitionControl/ExposureMode
+  - name: exposure_time
+    type: float
+    node: AcquisitionControl/ExposureTime
+  - name: acquisition_mode
+    type: enum
+    node: AcquisitionControl/AcquisitionMode
+  - name: frame_rate_enable
+    type: bool
+    node: AcquisitionControl/AcquisitionFrameRateEnabled
+  - name: frame_rate_auto
+    type: enum
+    node: AcquisitionControl/AcquisitionFrameRateAuto
+  - name: frame_rate
+    type: float
+    node: AcquisitionControl/AcquisitionFrameRate
+  - name: line_selector
+    type: enum
+    node: DigitalIOControl/LineSelector
+  - name: line_mode
+    type: enum
+    node: DigitalIOControl/LineMode
+  - name: line_source
+    type: enum
+    node: DigitalIOControl/LineSource
+  - name: trigger_source
+    type: enum
+    node: AcquisitionControl/TriggerSource
+  - name: trigger_activation
+    type: enum
+    node: AcquisitionControl/TriggerActivation
+  - name: trigger_mode
+    type: enum
+    node: AcquisitionControl/TriggerMode
+  # Grasshopper exposes TriggerOverlap only after TriggerMode is On.
+  - name: trigger_overlap
+    type: enum
+    node: AcquisitionControl/TriggerOverlap
+  - name: chunk_mode_active
+    type: bool
+    node: ChunkDataControl/ChunkModeActive
+  - name: chunk_selector_frame_counter
+    type: enum
+    node: ChunkDataControl/ChunkSelector
+  - name: chunk_enable_frame_counter
+    type: bool
+    node: ChunkDataControl/ChunkEnable
+  - name: chunk_selector_exposure_time
+    type: enum
+    node: ChunkDataControl/ChunkSelector
+  - name: chunk_enable_exposure_time
+    type: bool
+    node: ChunkDataControl/ChunkEnable
+  - name: chunk_selector_gain
+    type: enum
+    node: ChunkDataControl/ChunkSelector
+  - name: chunk_enable_gain
+    type: bool
+    node: ChunkDataControl/ChunkEnable
+  - name: chunk_selector_timestamp
+    type: enum
+    node: ChunkDataControl/ChunkSelector
+  - name: chunk_enable_timestamp
+    type: bool
+    node: ChunkDataControl/ChunkEnable

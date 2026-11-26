@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>grasshopper_bringup</name>
+  <version>0.1.0</version>
+  <description>Launch the five Grasshopper USB cameras with the local rig configuration.</description>
+  <maintainer email="henrik@example.com">Henrik</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rclcpp_components</exec_depend>
+  <exec_depend>spinnaker_camera_driver</exec_depend>
+  <exec_depend>spinnaker_synchronized_camera_driver</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>flir_camera_msgs</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

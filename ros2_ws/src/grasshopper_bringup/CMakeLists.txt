@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(grasshopper_bringup)
+find_package(ament_cmake REQUIRED)
+install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
+install(PROGRAMS scripts/check_cameras.py DESTINATION lib/${PROJECT_NAME} RENAME check_cameras)
+ament_package()

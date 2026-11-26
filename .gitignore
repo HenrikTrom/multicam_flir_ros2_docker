@@ -1,0 +1,8 @@
+/build/spinnaker/*.deb
+/Spinnaker 4.4 Ubuntu 24/
+/ros2_ws/build/
+/ros2_ws/install/
+/ros2_ws/log/
+__pycache__/
+/ros2_ws/src/tests/data/*
+!/ros2_ws/src/tests/data/.gitkeep

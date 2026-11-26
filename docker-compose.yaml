@@ -1,0 +1,36 @@
+services:
+  ros2-flir-multicam:
+    build:
+      context: ./build
+      args:
+        ROS_DISTRO: ${ROS_DISTRO}
+        FLIR_GID: ${FLIR_GID}
+        USER_UID: ${UID:-1000}
+        USER_GID: ${GID:-1000}
+
+    image: my/${TAG}_${ROS_DISTRO}
+    pull_policy: build
+
+    network_mode: host
+    shm_size: 1gb
+    command: ["start-cameras"]
+    init: true
+    stop_signal: SIGINT
+    stop_grace_period: 30s
+    tty: true
+
+    environment:
+      TERM: xterm-256color
+      DEBUG_COLORS: "true"
+      COLORTERM: truecolor
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID}
+      ROS_AUTOMATIC_DISCOVERY_RANGE: ${ROS_AUTOMATIC_DISCOVERY_RANGE:-SUBNET}
+      RMW_IMPLEMENTATION: ${RMW_IMPLEMENTATION:-rmw_fastrtps_cpp}
+
+    volumes:
+      - ./ros2_ws:/home/docker/ros2_ws
+      - ./flir_grashopper.json:/home/docker/config/flir_grashopper.json:ro
+      - /etc/localtime:/etc/localtime:ro
+
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
