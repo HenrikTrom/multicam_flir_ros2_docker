@@ -29,6 +29,8 @@ COPY user.sh /tmp/user.sh
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         cmake \
+        ca-certificates \
+        git \
         python3-colcon-common-extensions \
         libyaml-cpp-dev \
         ros-${ROS_DISTRO}-camera-info-manager \
@@ -36,12 +38,22 @@ RUN apt-get update \
         ros-${ROS_DISTRO}-image-transport \
     && rm -rf /var/lib/apt/lists/*
 
+# Keep this revision aligned with the repository's FLIR driver submodule.
+# Bundle a complete checkout so a plain clone can start without runtime Git/network access.
+ARG FLIR_DRIVER_REVISION=986172dbd8dab9ac5a365d0fcbd785508803e960
+RUN git init --quiet --initial-branch=source /opt/flir_ros2_camera_driver \
+    && git -C /opt/flir_ros2_camera_driver remote add origin \
+        https://github.com/HenrikTrom/flir_ros2_camera_driver.git \
+    && git -C /opt/flir_ros2_camera_driver fetch --depth 1 origin "${FLIR_DRIVER_REVISION}" \
+    && git -C /opt/flir_ros2_camera_driver checkout --quiet --detach FETCH_HEAD \
+    && test "$(git -C /opt/flir_ros2_camera_driver rev-parse HEAD)" = "${FLIR_DRIVER_REVISION}"
+
 RUN bash /tmp/user.sh \
     && groupadd --gid "${FLIR_GID}" flirimaging \
     && usermod --append --groups flirimaging docker \
     && printf '\nsource /opt/ros/%s/setup.bash\n' "${ROS_DISTRO}" >> /home/docker/.bashrc \
     && printf '[ ! -f /home/docker/ros2_ws/install/setup.bash ] || source /home/docker/ros2_ws/install/setup.bash\n' >> /home/docker/.bashrc \
-    && install -d -o docker -g "${USER_GID}" /home/docker/ros2_ws \
+    && install -d -o docker -g "${USER_GID}" /home/docker/ros2_ws /home/docker/ros2_ws/src \
     && rm /tmp/user.sh
 
 COPY --chmod=755 check_container.sh /usr/local/bin/check-container

@@ -33,6 +33,30 @@ docker compose up -d
 docker compose logs -f ros2-flir-multicam
 ```
 
+The FLIR driver is a Git submodule. For a development checkout, use
+`git clone --recurse-submodules https://github.com/HenrikTrom/multicam_flir_ros2_docker.git`.
+A plain clone is also supported: the Docker image bundles driver revision
+`986172dbd8dab9ac5a365d0fcbd785508803e960`, matching the submodule revision. If
+`ros2_ws/src/flir_ros2_camera_driver` is absent or empty, startup copies that
+checkout (including Git metadata) into the mounted workspace before building.
+This requires HTTPS access during the image build, with no source downloads
+or SSH credentials needed at runtime. An existing nonempty driver checkout,
+including local modifications, is left unchanged.
+
+To initialize a submodule manually in an existing clone, run from the repository root:
+
+```bash
+git submodule sync --recursive
+git submodule update --init --recursive
+```
+
+Startup checks that the message package, regular driver, synchronized driver,
+and launch package are all discoverable in source, then verifies that the built
+synchronized component is registered in the ament index. A build reporting only
+`grasshopper_bringup` is incomplete and will no longer proceed to camera launch.
+When updating the submodule revision, also update `FLIR_DRIVER_REVISION` in the
+Dockerfile so the bundled fallback matches it.
+
 Compose builds the Docker image using cached layers, then starts `start-cameras`.
 The startup script sources Jazzy, runs `colcon build` across the mounted
 `ros2_ws`, sources the resulting workspace overlay, and starts
